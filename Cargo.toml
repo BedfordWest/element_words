@@ -1,0 +1,7 @@
+[package]
+name = "element_words"
+version = "0.1.0"
+authors = ["bedfordwest <bedfordwest@gmail.com>"]
+
+[dependencies]
+csv = "0.15"
