@@ -7,8 +7,8 @@ fn main() {
 
     let mut rdr = csv::Reader::from_file("./ptdata2.csv").unwrap();
     let rows = rdr.decode().collect::<csv::Result<Vec<Row>>>().unwrap();
-    let accepted_rows = Vec<Row>;
-    for row in rows {
+    let mut accepted_rows: Vec<Row> = vec![];
+    for row in &rows {
         println!("Element {}: {}, {} weighs {}", row.0, row.1, row.2, row.3);
     }
     
@@ -21,23 +21,14 @@ fn main() {
                 if input == "exit" {
                     break;
                 }
-                let chars = input.chars();
-                for c in chars {
-                    if c.is_alphabetic() {
-                        println!("{}", c);
-                        let c_str = c.to_string();
-                        for row in rows {
-                            if c_str == row.1 {
-                                accepted_rows.push(row);
-                            }
-                        }
-                                
-                        }
-                    }
-                }
 
+                for row in &rows {
+                    let v: Vec<_> = input.match_indices(&row.1).collect();
+                    println!("{:?}", v);
+                }
             }
             Err(error) => println!("error: {}", error),
         }
     }
 }
+
