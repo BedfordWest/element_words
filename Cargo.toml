@@ -5,3 +5,5 @@ authors = ["bedfordwest <bedfordwest@gmail.com>"]
 
 [dependencies]
 csv = "0.15"
+rustc-serialize = "0.3.22"
+
