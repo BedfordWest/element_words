@@ -37,9 +37,9 @@ fn main() {
     let mut rdr = csv::Reader::from_file("./ptdata2.csv").unwrap();
     let rows: Vec<Row> = rdr.decode().collect::<csv::Result<Vec<Row>>>().unwrap();
 
-    for row in &rows {
-        println!("Element {}: {}, {} weighs {}", row.number, row.symbol, row.full_name, row.weight);
-    }
+    println!("Welcome to Element Speller!");
+    println!("Please enter a word to spell with elements from the periodic table.");
+    println!("Enter 'exit' to exit!");
     
     loop {
         let mut input = String::new();
@@ -47,19 +47,19 @@ fn main() {
             Ok(_) => {
                 let mut accepted_rows: Vec<Row> = vec![];
                 input = input.trim().to_string();
-                println!("{}", input);
                 input = input.to_lowercase();
-                println!("{}", input);
                 if input == "exit" {
                     break;
                 }
 
                 for row in &rows {
                     let new_v: Vec<_> = input.match_indices(&row.symbol.to_lowercase()).collect();
-                    println!("{:?}", new_v);
                     if new_v != [] {
-                        let new_row: Row = row.clone();
-                        accepted_rows.push(new_row);
+                        for matched_symbol in &new_v {
+                            let mut new_row: Row = row.clone();
+                            new_row.number = matched_symbol.0 as i8;
+                            accepted_rows.push(new_row);
+                        }
                     }
                 }
                 accepted_rows.sort();
@@ -78,4 +78,5 @@ fn main() {
         
     }
 }
+
 
