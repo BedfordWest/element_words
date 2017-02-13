@@ -36,7 +36,6 @@ fn main() {
 
     let mut rdr = csv::Reader::from_file("./ptdata2.csv").unwrap();
     let rows: Vec<Row> = rdr.decode().collect::<csv::Result<Vec<Row>>>().unwrap();
-    let mut accepted_rows: Vec<Row> = vec![];
 
     for row in &rows {
         println!("Element {}: {}, {} weighs {}", row.number, row.symbol, row.full_name, row.weight);
@@ -46,6 +45,7 @@ fn main() {
         let mut input = String::new();
         match io::stdin().read_line(&mut input) {
             Ok(_) => {
+                let mut accepted_rows: Vec<Row> = vec![];
                 input = input.trim().to_string();
                 println!("{}", input);
                 input = input.to_lowercase();
@@ -58,7 +58,7 @@ fn main() {
                     let new_v: Vec<_> = input.match_indices(&row.symbol.to_lowercase()).collect();
                     println!("{:?}", new_v);
                     if new_v != [] {
-                        let mut new_row: Row = row.clone();
+                        let new_row: Row = row.clone();
                         accepted_rows.push(new_row);
                     }
                 }
@@ -75,6 +75,7 @@ fn main() {
             }
             Err(error) => println!("error: {}", error),
         }
+        
     }
 }
 
